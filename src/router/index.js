@@ -1,35 +1,35 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Menu from '../views/Menu.vue'
-import Delivery from '../views/Delivery.vue'
-import About from '../views/About.vue'
-import Contacts from '../views/Contacts.vue'
+import HomePage from '../views/HomePage.vue'
+import MenuPage from '../views/MenuPage.vue'
+import DeliveryPage from '../views/DeliveryPage.vue'
+import AboutPage from '../views/AboutPage.vue'
+import ContactsPage from '../views/ContactsPage.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: HomePage
   },
   {
     path: '/menu',
     name: 'Menu',
-    component: Menu
+    component: MenuPage
   },
   {
     path: '/delivery',
     name: 'Delivery',
-    component: Delivery
+    component: DeliveryPage
   },
   {
     path: '/about',
     name: 'About',
-    component: About
+    component: AboutPage
   },
   {
     path: '/contacts',
     name: 'Contacts',
-    component: Contacts
+    component: ContactsPage
   }
 ]
 

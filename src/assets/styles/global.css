@@ -1,0 +1,83 @@
+/* global.css */
+
+/* Сброс маргинов и паддингов */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Удаление стилей у ссылок */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Удаление стилей у списков */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Сброс стилей для таблиц */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Удаление фона и границ у полей ввода и текстовых областей */
+input,
+button,
+textarea,
+select {
+  background: transparent;
+  border: none;
+  font: inherit;
+  color: inherit;
+}
+
+/* Установка базовых стилей для текста */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Обнуление стилей для блоков и заголовков */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  margin: 0;
+}
+
+/* Обнуление стилей для абзацев */
+p {
+  margin: 0;
+}
+
+
+/* Общие стили */
+body {
+    background-color: rgb(64, 17, 109);
+    background-image: url('../images/background_1920x2560.jpg');
+    background-repeat: no-repeat; /* Не повторять изображение */
+  background-size: cover; /* Изображение будет масштабироваться так, чтобы покрыть весь элемент */
+  background-position: center center; /* Позиция изображения в центре элемента */
+}
+
+/* Шапка */
+.navbar svg {
+    width: 50px;
+    height: 50px;
+}
+
+.home-icon svg:hover {
+    fill: #FF5733; /* Цвет при наведении */
+  }
+
+.nav_link__holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

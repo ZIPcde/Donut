@@ -4,17 +4,35 @@
       <img src="@/assets/logo.png" alt="Логотип" />
     </div>
     <ul class="navbar-links">
-      <li><a href="#menu">Меню</a></li>
-      <li><a href="#delivery">Доставка</a></li>
-      <li><a href="#about">О нас</a></li>
-      <li><a href="#contacts">Контакты</a></li>
+      <li>
+        <router-link to="/" class="nav-link nav_link__holder"><div v-html="homeIcon"></div><p>Главная</p></router-link>
+      </li>
+      <li>
+        <router-link to="/menu" class="nav-link nav_link__holder"><div v-html="menuIcon"></div><p>Меню</p></router-link>
+      </li>
+      <li>
+        <router-link to="/delivery" class="nav-link nav_link__holder"><div v-html="delivIcon"></div><p>Доставка</p></router-link>
+      </li>
+      <li>
+        <router-link to="/about" class="nav-link nav_link__holder"><div v-html="aboutIcon"></div><p>О нас</p></router-link>
+      </li>
+      <li>
+        <router-link to="/contacts" class="nav-link nav_link__holder"><div v-html="contactsIcon"></div><p>Контакты</p></router-link>
+      </li>
     </ul>
   </nav>
 </template>
 
 <script>
+import { homeIcon, menuIcon, delivIcon, aboutIcon, contactsIcon } from '@/assets/images/icons/icons.js';
+
 export default {
-  name: 'NavBar'
+  name: 'NavBar',
+  data() {
+    return {
+      homeIcon, menuIcon, delivIcon, aboutIcon, contactsIcon,
+    }
+  },
 }
 </script>
 
@@ -39,7 +57,7 @@ export default {
 }
 
 .navbar-links li {
-  display: inline;
+  /* display: inline; */
 }
 
 .navbar-links a {

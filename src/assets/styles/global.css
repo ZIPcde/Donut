@@ -66,10 +66,39 @@ body {
 }
 
 /* Шапка */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.5);;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Наивысший z-index, чтобы шапка всегда была видна */
+    margin: 0 auto;
+}
+
 .navbar svg {
     width: 50px;
     height: 50px;
 }
+
+.navbar-links {
+    margin: 0 auto;
+    color: #FF5733;
+}
+
+.navbar-links a {
+    width: 90px;
+    /* padding-left: 10px;
+    padding-right: 10px; */
+    border-radius: 10px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+  .navbar-links a:hover {
+    background-color: rgb(87, 87, 87);
+    transition: background-color 1.5s ease; /* Переход длительностью 0.3 секунды */
+  }
 
 .home-icon svg:hover {
     fill: #FF5733; /* Цвет при наведении */
@@ -80,4 +109,58 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.navbar-links p {
+    /* margin-top: -9px; */
+    font-size: 16px;
+ 
+}
+
+.router-link-active {
+    outline: 2px solid #ffffff; /* контур как при Tab */  
+    outline-offset: 2px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.2);;
+  }
+
+@media (max-width: 600px) {
+    .navbar svg {
+        display: none;
+    }
+  }
+
+/* Главная страница */
+
+.discription_holder {
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    max-width: 700px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.donut_logo {
+  margin-left: 7px;
+  margin-right: 10px;
+  max-width: 140px;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.h1_holder {
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.h1 {
+  font-size: 60px;
+  color: #ffffff;
+  text-shadow: 
+        -1px -1px 0 #413b76,  
+        1px -1px 0 #413b76,  
+        -1px 1px 0 #413b76,  
+        1px 1px 0 #413b76; /* Окантовка */
 }

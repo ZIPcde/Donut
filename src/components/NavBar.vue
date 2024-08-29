@@ -1,8 +1,5 @@
 <template>
   <nav class="navbar">
-    <div class="navbar-logo">
-      <img src="@/assets/logo.png" alt="Логотип" />
-    </div>
     <ul class="navbar-links">
       <li>
         <router-link to="/" class="nav-link nav_link__holder"><div v-html="homeIcon"></div><p>Главная</p></router-link>
@@ -21,6 +18,8 @@
       </li>
     </ul>
   </nav>
+  <div class="navbar-logo">
+    </div>
 </template>
 
 <script>
@@ -42,7 +41,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #fff;
   border-bottom: 1px solid #ddd;
 }
 
@@ -58,12 +56,6 @@ export default {
 
 .navbar-links li {
   /* display: inline; */
-}
-
-.navbar-links a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
 }
 
 .navbar-links a:hover {

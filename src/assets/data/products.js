@@ -1,6 +1,7 @@
 export const products = [
     // Пирожные
     {
+      id: 1,
       category: 'Пирожные',
       name: 'Шоколадное пирожное',
       price: 150,
@@ -8,6 +9,7 @@ export const products = [
       description: 'Нежное шоколадное пирожное с насыщенным вкусом какао и мягким бисквитом.',
     },
     {
+      id: 2,
       category: 'Пирожные',
       name: 'Фруктовое пирожное',
       price: 130,
@@ -15,6 +17,7 @@ export const products = [
       description: 'Свежие фрукты на легком бисквите, идеально для летнего дня.',
     },
     {
+      id: 3,
       category: 'Пирожные',
       name: 'Тирамису',
       price: 180,
@@ -24,6 +27,7 @@ export const products = [
   
     // Кофе
     {
+      id: 4,
       category: 'Кофе',
       name: 'Эспрессо',
       price: 100,
@@ -31,6 +35,7 @@ export const products = [
       description: 'Крепкий и бодрящий эспрессо из отборных кофейных зерен.',
     },
     {
+      id: 5,
       category: 'Кофе',
       name: 'Капучино',
       price: 140,
@@ -38,6 +43,7 @@ export const products = [
       description: 'Кофе с молоком и воздушной пенкой, сбалансированный вкус.',
     },
     {
+      id: 6,
       category: 'Кофе',
       name: 'Латте',
       price: 150,
@@ -47,6 +53,7 @@ export const products = [
   
     // Чай
     {
+      id: 7,
       category: 'Чай',
       name: 'Черный чай',
       price: 80,
@@ -54,6 +61,7 @@ export const products = [
       description: 'Классический черный чай с глубоким насыщенным вкусом.',
     },
     {
+      id: 8,
       category: 'Чай',
       name: 'Зеленый чай',
       price: 90,
@@ -61,6 +69,7 @@ export const products = [
       description: 'Освежающий зеленый чай с нотками свежести и легкой горечи.',
     },
     {
+      id: 9,
       category: 'Чай',
       name: 'Травяной чай',
       price: 100,
@@ -70,6 +79,7 @@ export const products = [
   
     // Пончики
     {
+      id: 10,
       category: 'Пончики',
       name: 'Пончик с шоколадом',
       price: 70,
@@ -77,6 +87,7 @@ export const products = [
       description: 'Мягкий пончик с шоколадной глазурью и сочной начинкой.',
     },
     {
+      id: 11,
       category: 'Пончики',
       name: 'Пончик с клубникой',
       price: 75,
@@ -84,6 +95,7 @@ export const products = [
       description: 'Пончик с клубничной глазурью и свежей ягодной начинкой.',
     },
     {
+      id: 12,
       category: 'Пончики',
       name: 'Пончик с ванилью',
       price: 70,
@@ -93,6 +105,7 @@ export const products = [
   
     // Пицца
     {
+      id: 13,
       category: 'Пицца',
       name: 'Маргарита',
       price: 350,
@@ -100,6 +113,7 @@ export const products = [
       description: 'Классическая пицца с томатным соусом, моцареллой и свежим базиликом.',
     },
     {
+      id: 14,
       category: 'Пицца',
       name: 'Пепперони',
       price: 400,
@@ -107,6 +121,7 @@ export const products = [
       description: 'Пицца с пикантной колбасой пепперони и моцареллой на хрустящей корочке.',
     },
     {
+      id: 15,
       category: 'Пицца',
       name: 'Гавайская',
       price: 380,
@@ -116,6 +131,7 @@ export const products = [
   
     // Закуски
     {
+      id: 16,
       category: 'Закуски',
       name: 'Картофель фри',
       price: 120,
@@ -123,6 +139,7 @@ export const products = [
       description: 'Хрустящий картофель фри, обжаренный до золотистой корочки.',
     },
     {
+      id: 17,
       category: 'Закуски',
       name: 'Луковые кольца',
       price: 110,
@@ -130,6 +147,7 @@ export const products = [
       description: 'Нежные луковые кольца, обжаренные в хрустящем кляре.',
     },
     {
+      id: 18,
       category: 'Закуски',
       name: 'Моцарелла стики',
       price: 130,

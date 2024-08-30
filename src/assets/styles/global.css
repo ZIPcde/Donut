@@ -164,3 +164,89 @@ body {
         -1px 1px 0 #413b76,  
         1px 1px 0 #413b76; /* Окантовка */
 }
+
+/*           slider Home */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.pagination_prev {
+  background-image: url("@/assets/images/elements/Arrow_toLeft.svg");
+  width: 8px;
+  height: 14px;
+  margin-right: 5px;
+}
+div[class^="pagination_point"] {
+  background-image: url("@/assets/images/elements/round-green.svg");
+  width: 15px;
+  height: 15px;
+  margin-left: 3px;
+  margin-right:  3px;
+}
+
+div[class^="pagination_point"].active {
+  background-image: url("@/assets/images/elements/round-red.svg");
+  width: 15px;
+  height: 15px;
+}
+
+.pagination_next {
+  background-image: url("@/assets/images/elements/Arrow_toRight.svg");
+  width: 8px;
+  height: 14px;
+  margin-left: 5px;
+} 
+
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+img[class^="slider_item"] {
+  border: solid 3px #000000;
+}
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.slider_item__-2 {
+  width: 250px;
+  height: 150px;
+  opacity: 0.3;
+  transform: perspective(500px) rotateY(-60deg); /* Наклон элемента */
+}
+.slider_item__-1 {
+  object-fit: fill;
+  width: 250px;
+  height: 218px;
+  opacity: 0.6;
+  transform: perspective(500px) rotateY(-30deg); /* Наклон элемента */
+  margin-left: -73px;
+}
+.slider_item___0 {
+  width: 250px;
+  height: 250px;
+}
+.slider_item__1 {
+  object-fit: fill;
+  width: 250px;
+  height: 218px;
+  opacity: 0.6;
+  transform: perspective(500px) rotateY(30deg); /* Наклон элемента */
+  margin-right: -73px;
+}
+.slider_item__2 {
+  width: 250px;
+  height: 150px;
+  opacity: 0.3;
+  transform: perspective(500px) rotateY(60deg); /* Наклон элемента */
+
+}

@@ -2,30 +2,40 @@
   <div class="menu-page">
     <h1>Меню</h1>
 
-    <!-- Перебираем категории и отображаем карточки товаров -->
-    <div v-for="category in categories" :key="category" class="menu-category">
-      <h2>{{ category }}</h2>
-      <div class="product-grid">
-        <div v-for="product in getProductsByCategory(category)" :key="product.id" class="product-card">
-          <img :src="product.imagePath" :alt="product.name" class="product-image" />
-          <div class="product-info">
-            <h3>{{ product.name }}</h3>
-            <p>{{ product.description }}</p>
-            <p class="product-price">{{ product.price }} руб.</p>
-          </div>
-
-          <!-- Секция добавления в заказ -->
-          <div class="order-actions">
-            <button @click="addToOrder(product.id)" v-if="!isProductInOrder(product.id)" class="add-button">
-              Добавить в заказ
-            </button>
-            <div v-else class="quantity-controls">
-              <button @click="decreaseQuantity(product.id)" class="quantity-button">-</button>
-              <span class="quantity">{{ getQuantity(product.id) }}</span>
-              <button @click="increaseQuantity(product.id)" class="quantity-button">+</button>
+    <div class="menu-content">
+      <div class="menu-products">
+        <!-- Секция с карточками продуктов -->
+        <div v-for="category in categories" :key="category" class="menu-category">
+          <h2>{{ category }}</h2>
+          <div class="product-grid">
+            <div v-for="product in getProductsByCategory(category)" :key="product.id" class="product-card">
+              <img :src="product.imagePath" :alt="product.name" class="product-image" />
+              <div class="product-info">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+              </div>
+              <div class="product-bottom">
+                <p class="product-price">{{ product.price }} руб.</p>
+                <div class="order-actions">
+                  <button @click="addToOrder(product.id)" v-if="!isProductInOrder(product.id)" class="add-button">
+                    Добавить в заказ
+                  </button>
+                  <div v-else class="quantity-controls">
+                    <button @click="decreaseQuantity(product.id)" class="quantity-button">-</button>
+                    <span class="quantity">{{ getQuantity(product.id) }}</span>
+                    <button @click="increaseQuantity(product.id)" class="quantity-button">+</button>
+                    <button @click="confirmOrder(product.id)" class="confirm-button">Подтвердить</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Секция с обзором заказа -->
+      <div class="menu-order">
+        <OrderSummary :order="order" :products="products" @update-order="updateOrder" @remove-from-order="removeFromOrder" />
       </div>
     </div>
   </div>
@@ -33,58 +43,57 @@
 
 <script>
 import products from '@/assets/data/products.js';
+import OrderSummary from '@/components/OrderSummary.vue';
 
 export default {
   name: 'MenuPage',
+  components: {
+    OrderSummary,
+  },
   data() {
     return {
-      products, // Массив всех товаров
-      order: {}, // Заказ, где ключ - id товара, значение - количество
+      products, // Список товаров
+      order: {}, // Текущий заказ
     };
   },
   computed: {
-    // Собираем уникальные категории товаров
     categories() {
       return [...new Set(this.products.map(product => product.category))];
     },
   },
   methods: {
-    // Фильтруем товары по категориям
     getProductsByCategory(category) {
       return this.products.filter(product => product.category === category);
     },
-
-    // Проверяем, добавлен ли продукт в заказ
     isProductInOrder(productId) {
       return this.order[productId] && this.order[productId] > 0;
     },
-
-    // Получаем количество продукта в заказе
     getQuantity(productId) {
       return this.order[productId] || 0;
     },
-
-    // Увеличиваем количество продукта
-    increaseQuantity(productId) {
-      if (this.order[productId]) {
-        this.order[productId]++;
+    addToOrder(productId) {
+      if (!this.order[productId]) {
+        this.order[productId] = 1;
       }
     },
-
-    // Уменьшаем количество продукта
+    increaseQuantity(productId) {
+      this.order[productId]++;
+    },
     decreaseQuantity(productId) {
       if (this.order[productId] > 1) {
         this.order[productId]--;
       } else {
-        delete this.order[productId]; // Удаляем продукт из заказа, если количество 0
+        delete this.order[productId];
       }
     },
-
-    // Добавляем продукт в заказ
-    addToOrder(productId) {
-      if (!this.order[productId]) {
-        this.order[productId] = 1; // Устанавливаем начальное количество 1
-      }
+    updateOrder({ productId, quantity }) {
+      this.order[productId] = quantity;
+    },
+    removeFromOrder(productId) {
+      delete this.order[productId];
+    },
+    confirmOrder(productId) {
+      alert(`Вы добавили в заказ: ${this.getQuantity(productId)} шт. товара ${this.products.find(p => p.id === productId).name}`);
     },
   },
 };
@@ -111,6 +120,9 @@ export default {
 }
 
 .product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Гарантируем, что нижний блок будет внизу */
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -136,16 +148,24 @@ export default {
   color: #555;
 }
 
+/* Стили для нижней части карточки (цена и кнопки) */
+.product-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Выровнять элементы по низу */
+  margin-top: auto; /* Чтобы цена и кнопки всегда находились внизу */
+}
+
 .product-price {
   font-weight: bold;
-  margin-top: 10px;
   font-size: 16px;
   color: #ff9800;
+  margin-bottom: 10px; /* Отступ перед кнопками */
 }
 
 /* Стили для кнопок добавления в заказ */
 .order-actions {
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .add-button {
@@ -184,7 +204,35 @@ export default {
   font-weight: bold;
 }
 
+.confirm-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.confirm-button:hover {
+  background-color: #45a049;
+}
+
 .quantity-button:hover {
   background-color: #e68900;
+}
+
+.menu-content {
+  display: flex;
+  gap: 20px;
+}
+
+.menu-products {
+  flex: 2;
+}
+
+.menu-order {
+  flex: 1;
 }
 </style>

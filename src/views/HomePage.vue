@@ -4,8 +4,9 @@
     
     <div class="h1_holder">
       <h1 class="h1">Donut bar</h1>
+      <h2 class="h2">Добро пожаловать!</h2>
     </div>
-    
+    <ImageSlider />
     <p>1</p>
     <p>2</p>
     <p>3</p>
@@ -40,7 +41,12 @@
 </template>
 
 <script>
+import ImageSlider from '@/components/ImageSlider.vue';
+
 export default {
+  components: {
+    ImageSlider,
+  },
   metaInfo: {
     title: 'Главная страница',
     meta: [

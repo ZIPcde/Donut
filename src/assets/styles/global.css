@@ -165,6 +165,15 @@ body {
         1px 1px 0 #413b76; /* Окантовка */
 }
 
+.h2 {
+  font-size: 40px;
+  color: #ffffff;
+  text-shadow: 
+        -1px -1px 0 #413b76,  
+        1px -1px 0 #413b76,  
+        -1px 1px 0 #413b76,  
+        1px 1px 0 #413b76; /* Окантовка */
+}
 /*           slider Home */
 
 .pagination {

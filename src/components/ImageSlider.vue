@@ -1,6 +1,5 @@
 <template>
   <div class="slider_container">
-    <img class="donut_logo" src="@/assets/logo.png" alt="Логотип" />
     <div class="slider">
       <!-- Отображаем слайды с учётом боковых изображений -->
       <img
@@ -39,6 +38,7 @@ export default {
       sliderImages: products.slice(0, 5),
       currentIndex: 0,
       visibleCount: 5, // Количество видимых изображений (центральное + два боковых с каждой стороны)
+      autoSlideInterval: null, // Интервал автопрокрутки
     };
   },
   computed: {
@@ -87,10 +87,68 @@ export default {
     goToSlide(index) {
       this.currentIndex = index;
     },
+    startAutoSlide() {
+      this.autoSlideInterval = setInterval(() => {
+        this.nextSlide();
+      }, 3000); // Автопрокрутка каждые 3 секунды
+    },
+    stopAutoSlide() {
+      if (this.autoSlideInterval) {
+        clearInterval(this.autoSlideInterval);
+        this.autoSlideInterval = null;
+      }
+    },
+  },
+  mounted() {
+    this.startAutoSlide(); // Запускаем автопрокрутку при монтировании компонента
+  },
+  beforeUnmount() {
+    this.stopAutoSlide(); // Останавливаем автопрокрутку перед уничтожением компонента
   },
 };
 </script>
 
 <style scoped>
+.slider_container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
 
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 1.5s ease; /* Добавляем плавный переход для слайдов */
+}
+
+.slider_item {
+
+  transition: transform 1.5s ease, opacity 1.5s ease; /* Плавная анимация смены слайдов */
+}
+
+.slider_item__-2 {
+  /* transform: scale(0.7); */
+  opacity: 0.5;
+}
+
+.slider_item__-1 {
+  /* transform: scale(0.85); */
+  opacity: 0.7;
+}
+
+.slider_item___0 {
+  /* transform: scale(1); */
+  opacity: 1; /* Центральное изображение с максимальной видимостью */
+}
+
+.slider_item__1 {
+  /* transform: scale(0.85); */
+  opacity: 0.7;
+}
+
+.slider_item__2 {
+  /* transform: scale(0.7); */
+  opacity: 0.5;
+}
 </style>

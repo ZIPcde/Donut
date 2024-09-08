@@ -1,3 +1,5 @@
+<!-- ParentComponentReg.vue -->
+
 <template>
     <div>
       <button @click="showPopup = true">Регистрация</button>

@@ -1,3 +1,5 @@
+<!-- RegistrationPopup.vue -->
+
 <template>
     <div v-if="isVisible" class="overlay">
       <div class="popup">

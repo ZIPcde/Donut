@@ -1,3 +1,4 @@
+<!-- OrderSummary.vue -->
 <template>
   <div class="order-summary">
     <h2>Ваш заказ</h2>
@@ -9,7 +10,7 @@
     <div v-else class="order-items">
       <div v-for="item in orderItems" :key="item.id" class="order-item">
         <div class="item-info">
-          <span class="item-name">{{ item.name }}</span>
+          <span class="item-name">{{ item.name + " " }}</span>
           <span class="item-price">{{ item.price }} руб.</span>
         </div>
         <div class="item-quantity">
@@ -79,12 +80,17 @@ export default {
 };
 </script>
 
+
+
 <style scoped>
 .order-summary {
+  width: 100%;
+  max-width: 1252px;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #fff;
+  margin-bottom: 20px;
 }
 
 .order-summary h2 {

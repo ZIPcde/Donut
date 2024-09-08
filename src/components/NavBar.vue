@@ -51,7 +51,8 @@ export default {
 .navbar-links {
   list-style: none;
   display: flex;
-  gap: 20px;
+  justify-content: center;
+  gap: 10px;
 }
 
 .navbar-links li {

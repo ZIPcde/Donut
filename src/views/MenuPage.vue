@@ -1,103 +1,100 @@
+<!-- MenuPage.vue -->
 <template>
   <div class="menu-page">
-    <h1>Меню</h1>
-
-    <div class="menu-content">
-      <div class="menu-products">
-        <!-- Секция с карточками продуктов -->
-        <div v-for="category in categories" :key="category" class="menu-category">
-          <h2>{{ category }}</h2>
-          <div class="product-grid">
-            <ProductCard
-              v-for="product in getProductsByCategory(category)"
-              :key="product.id"
-              :product="product"
-              :quantity="order[product.id] || 0"
-              @add-to-order="addToOrder"
-              @increase-quantity="increaseQuantity"
-              @decrease-quantity="decreaseQuantity"
-              @confirm-order="confirmOrder"
-            />
-          </div>
-        </div>
-      </div>
-
-      <!-- Секция с обзором заказа -->
+    <div class="menu-order_holder">
+      <h1 class="h1">Меню</h1>
       <div class="menu-order">
         <OrderSummary
           :order="order"
           :products="products"
           @update-order="updateOrder"
           @remove-from-order="removeFromOrder"
+          @increase-quantity="increaseQuantity" 
+          @decrease-quantity="decreaseQuantity" 
         />
+      </div>
+    </div>
+    <div class="menu-content">
+      <div class="menu-products">
+        <div v-for="category in categories" :key="category" class="menu-category">
+          <h2 class="h2">{{ category }}</h2>
+          <div class="product-grid_holder">
+            <div class="product-grid">
+              <ProductCard
+                v-for="product in getProductsByCategory(category)"
+                :key="product.id"
+                :product="product"
+                :quantity="getQuantityFromStore(product.id)"
+                @add-to-order="addToOrder"
+                @increase-quantity="increaseQuantity"
+                @decrease-quantity="decreaseQuantity"
+                @confirm-order="confirmOrder"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import products from '@/assets/data/products.js';
 import OrderSummary from '@/components/OrderSummary.vue';
-import ProductCard from '@/components/ProductCard.vue'; // Импортируем компонент карточки товара
+import ProductCard from '@/components/ProductCard.vue';
 
 export default {
   name: 'MenuPage',
   components: {
     OrderSummary,
-    ProductCard, // Добавляем компонент в список используемых
-  },
-  data() {
-    return {
-      products, // Список товаров
-      order: {}, // Текущий заказ
-    };
+    ProductCard,
   },
   computed: {
+    ...mapState('cart', {
+      order: (state) => state.order || {},
+    }),
     categories() {
       return [...new Set(this.products.map(product => product.category))];
     },
   },
   methods: {
+    ...mapActions('cart', {
+      addToOrder: 'addToOrder',
+      increaseQuantity: 'increaseQuantity',
+      decreaseQuantity: 'decreaseQuantity',
+      updateOrder: 'updateOrder',
+      removeFromOrder: 'removeFromOrder',
+    }),
     getProductsByCategory(category) {
       return this.products.filter(product => product.category === category);
     },
-    isProductInOrder(productId) {
-      return this.order[productId] && this.order[productId] > 0;
-    },
-    getQuantity(productId) {
+    getQuantityFromStore(productId) {
       return this.order[productId] || 0;
     },
-    addToOrder(product) {
-      if (!this.order[product.id]) {
-        this.order[product.id] = 1;
-      }
+    confirmOrder({ productId, quantity }) {
+      // Call Vuex action to update the order
+      this.updateOrder({ productId, quantity });
     },
-    increaseQuantity(productId) {
-      this.order[productId]++;
-    },
-    decreaseQuantity(productId) {
-      if (this.order[productId] > 1) {
-        this.order[productId]--;
-      } else {
-        delete this.order[productId];
-      }
-    },
-    updateOrder({ productId, quantity }) {
-      this.order[productId] = quantity;
-    },
-    removeFromOrder(productId) {
-      delete this.order[productId];
-    },
-    confirmOrder(productId) {
-      alert(`Вы добавили в заказ: ${this.getQuantity(productId)} шт. товара ${this.products.find(p => p.id === productId).name}`);
-    },
+  },
+  data() {
+    return {
+      products,
+    };
   },
 };
 </script>
 
+
+
 <style scoped>
+/* Стили остались без изменений */
 .menu-page {
   padding: 20px;
+}
+
+.menu-order_holder {
+  justify-content: center;
 }
 
 .menu-category {
@@ -107,12 +104,6 @@ export default {
 .menu-category h2 {
   font-size: 24px;
   margin-bottom: 20px;
-}
-
-.product-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
 }
 
 .menu-content {
@@ -125,6 +116,47 @@ export default {
 }
 
 .menu-order {
+  display: flex;
+  width: 100%;
   flex: 1;
+  justify-content: center;
+}
+
+.product-grid_holder {
+  display: flex;
+  justify-content: center;
+}
+
+.product-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+@media (min-width: 1200px) {
+  .product-card {
+    flex: 1 1 calc(33% - 40px);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .product-card {
+    max-width: 45%;
+    flex: 1 1 calc(50% - 40px);
+  }
+}
+
+@media (max-width: 767px) {
+  .product-card {
+    flex: 1 1 calc(100% - 20px);
+  }
+
+  .menu-category h2 {
+    font-size: 4vw;
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-shadow: -1px -1px 0 #413b76, 1px -1px 0 #413b76, -1px 1px 0 #413b76, 1px 1px 0 #413b76;
+  }
 }
 </style>

@@ -1,4 +1,6 @@
 <!-- OrderSummary.vue -->
+
+
 <template>
   <div class="order-summary">
     <h2>Ваш заказ</h2>
@@ -74,11 +76,12 @@ export default {
     },
     // Оформление заказа
     checkoutOrder() {
-      alert(`Ваш заказ на сумму ${this.totalOrderPrice} руб. оформлен!`);
+      this.$emit('checkout');
     },
   },
 };
 </script>
+
 
 
 

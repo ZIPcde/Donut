@@ -8,7 +8,7 @@
   </template>
   
   <script>
-  import RegistrationPopup from '@/components/RegistrationPopup.vue';
+  import RegistrationPopup from '@/components/OrderPopup.vue';
   
   export default {
     components: {

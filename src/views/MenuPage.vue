@@ -1,4 +1,5 @@
 <!-- MenuPage.vue -->
+
 <template>
   <div class="menu-page">
     <div class="menu-order_holder">
@@ -9,8 +10,7 @@
           :products="products"
           @update-order="updateOrder"
           @remove-from-order="removeFromOrder"
-          @increase-quantity="increaseQuantity" 
-          @decrease-quantity="decreaseQuantity" 
+          @checkout="openOrderPopup"
         />
       </div>
     </div>
@@ -35,6 +35,13 @@
         </div>
       </div>
     </div>
+    
+    <!-- Всплывающее окно для заказа -->
+    <OrderPopup
+      :isVisible="isOrderPopupVisible"
+      @close="closeOrderPopup"
+      @submit-order="handleOrderSubmission"
+    />
   </div>
 </template>
 
@@ -43,12 +50,20 @@ import { mapState, mapActions } from 'vuex';
 import products from '@/assets/data/products.js';
 import OrderSummary from '@/components/OrderSummary.vue';
 import ProductCard from '@/components/ProductCard.vue';
+import OrderPopup from '@/components/OrderPopup.vue'; // Импортируйте ваш новый компонент
 
 export default {
   name: 'MenuPage',
   components: {
     OrderSummary,
     ProductCard,
+    OrderPopup,
+  },
+  data() {
+    return {
+      products,
+      isOrderPopupVisible: false, // Управление видимостью всплывающего окна
+    };
   },
   computed: {
     ...mapState('cart', {
@@ -73,17 +88,23 @@ export default {
       return this.order[productId] || 0;
     },
     confirmOrder({ productId, quantity }) {
-      // Call Vuex action to update the order
       this.updateOrder({ productId, quantity });
     },
-  },
-  data() {
-    return {
-      products,
-    };
+    openOrderPopup() {
+      this.isOrderPopupVisible = true;
+    },
+    closeOrderPopup() {
+      this.isOrderPopupVisible = false;
+    },
+    handleOrderSubmission(orderDetails) {
+      console.log('Order details submitted:', orderDetails);
+      // Здесь вы можете отправить данные заказа на сервер или обработать их другим способом
+      this.closeOrderPopup();
+    },
   },
 };
 </script>
+
 
 
 

@@ -71,7 +71,7 @@ body {
     padding: 10px;
     position: sticky;
     top: 0;
-    z-index: 100; /* Наивысший z-index, чтобы шапка всегда была видна */
+    z-index: 99; /* Наивысший z-index, чтобы шапка всегда была видна */
     margin: 0 auto;
 }
 

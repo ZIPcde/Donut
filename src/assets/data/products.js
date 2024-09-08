@@ -1,3 +1,5 @@
+// products.js
+
 const products = [
   // Пирожные
   {

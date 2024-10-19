@@ -35,6 +35,13 @@
         Стоимость доставки по станице Крыловской - 100 рублей. При заказе от 1000 рублей - доставка бесплатно!
       </p>
 
+      <!-- Поле для адреса доставки -->
+      <div v-if="!isPickup" class="form-group">
+        <label for="address">Адрес доставки:</label>
+        <input type="text" id="address" v-model="deliveryAddress" placeholder="Введите адрес доставки" />
+      </div>
+
+      <!-- Поле для времени визита при самовывозе -->
       <div v-if="isPickup" class="form-group">
         <label for="visit-time">Время визита:</label>
         <input type="time" id="visit-time" v-model="visitTime" />
@@ -53,6 +60,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'OrderPopup',
   props: {
@@ -67,6 +76,9 @@ export default {
       phone: '',
       isPickup: false, // По умолчанию самовывоз не выбран
       visitTime: '',
+      deliveryAddress: '', // Новое поле для адреса доставки
+      items: '[{"name": "Donut", "quantity": 2, "price": 50}]', // Пример данных по заказу
+      totalAmount: 100.00, // Пример итоговой суммы
     };
   },
   methods: {
@@ -79,19 +91,33 @@ export default {
     selectDelivery() {
       this.isPickup = false; // Активируем доставку
     },
-    submitOrder() {
+    async submitOrder() {
       const orderDetails = {
-        name: this.name,
-        phone: this.phone,
-        deliveryMethod: this.isPickup ? 'pickup' : 'delivery',
-        visitTime: this.isPickup ? this.visitTime : null,
+        customer_name: this.name,
+        customer_phone: this.phone,
+        delivery_required: this.isPickup ? 0 : 1, // 1 - доставка, 0 - самовывоз
+        delivery_address: !this.isPickup ? this.deliveryAddress : null,
+        items: this.items, // Пример списка товаров
+        total_amount: this.totalAmount, // Итоговая сумма
+        pickup_time: this.isPickup ? this.visitTime : null,
+        table_number: null, // Можно добавить если потребуется бронирование
       };
-      console.log('Order submitted:', orderDetails);
-      this.$emit('submit-order', orderDetails);
+
+      try {
+        // Отправка запроса на бэкенд
+        const response = await axios.post('/api/orders', { orderDetails });
+        console.log('Order submitted successfully:', response.data);
+
+        // Закрытие всплывающего окна после успешной отправки
+        this.closePopup();
+      } catch (error) {
+        console.error('Failed to submit order:', error);
+      }
     },
   },
 };
 </script>
+
 
 <style scoped>
 .overlay {

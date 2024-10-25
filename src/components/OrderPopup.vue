@@ -1,5 +1,5 @@
-<!-- RegistrationPopup.vue -->
-
+<!-- OrderPopup.vue -->
+ 
 <template>
   <div v-if="isVisible" class="overlay">
     <div class="popup">
@@ -69,16 +69,22 @@ export default {
       type: Boolean,
       default: false,
     },
+    items: {
+      type: Array,
+      required: true,
+    },
+    totalAmount: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
       name: '',
       phone: '',
-      isPickup: false, // По умолчанию самовывоз не выбран
+      isPickup: false,
       visitTime: '',
-      deliveryAddress: '', // Новое поле для адреса доставки
-      items: '[{"name": "Donut", "quantity": 2, "price": 50}]', // Пример данных по заказу
-      totalAmount: 100.00, // Пример итоговой суммы
+      deliveryAddress: '',
     };
   },
   methods: {
@@ -86,29 +92,26 @@ export default {
       this.$emit('close');
     },
     selectPickup() {
-      this.isPickup = true; // Активируем самовывоз
+      this.isPickup = true;
     },
     selectDelivery() {
-      this.isPickup = false; // Активируем доставку
+      this.isPickup = false;
     },
     async submitOrder() {
       const orderDetails = {
         customer_name: this.name,
         customer_phone: this.phone,
-        delivery_required: this.isPickup ? 0 : 1, // 1 - доставка, 0 - самовывоз
+        delivery_required: this.isPickup ? 0 : 1,
         delivery_address: !this.isPickup ? this.deliveryAddress : null,
-        items: this.items, // Пример списка товаров
-        total_amount: this.totalAmount, // Итоговая сумма
+        items: this.items, // Передаем реальные данные по заказу
+        total_amount: this.totalAmount, // Передаем реальную итоговую сумму
         pickup_time: this.isPickup ? this.visitTime : null,
-        table_number: null, // Можно добавить если потребуется бронирование
+        table_number: null,
       };
 
       try {
-        // Отправка запроса на бэкенд
         const response = await axios.post('/api/orders', { orderDetails });
         console.log('Order submitted successfully:', response.data);
-
-        // Закрытие всплывающего окна после успешной отправки
         this.closePopup();
       } catch (error) {
         console.error('Failed to submit order:', error);
@@ -117,6 +120,7 @@ export default {
   },
 };
 </script>
+
 
 
 <style scoped>

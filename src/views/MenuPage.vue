@@ -38,7 +38,9 @@
     
     <!-- Всплывающее окно для заказа -->
     <OrderPopup
-      :isVisible="isOrderPopupVisible"
+    :isVisible="isOrderPopupVisible"
+      :items="orderItems"
+      :totalAmount="totalOrderPrice"
       @close="closeOrderPopup"
       @submit-order="handleOrderSubmission"
     />
@@ -50,7 +52,7 @@ import { mapState, mapActions } from 'vuex';
 import products from '@/assets/data/products.js';
 import OrderSummary from '@/components/OrderSummary.vue';
 import ProductCard from '@/components/ProductCard.vue';
-import OrderPopup from '@/components/OrderPopup.vue'; // Импортируйте ваш новый компонент
+import OrderPopup from '@/components/OrderPopup.vue';
 
 export default {
   name: 'MenuPage',
@@ -62,7 +64,7 @@ export default {
   data() {
     return {
       products,
-      isOrderPopupVisible: false, // Управление видимостью всплывающего окна
+      isOrderPopupVisible: false,
     };
   },
   computed: {
@@ -71,6 +73,18 @@ export default {
     }),
     categories() {
       return [...new Set(this.products.map(product => product.category))];
+    },
+    orderItems() {
+      return Object.keys(this.order).map(productId => {
+        const product = this.products.find(p => p.id === Number(productId));
+        return {
+          ...product,
+          quantity: this.order[productId],
+        };
+      });
+    },
+    totalOrderPrice() {
+      return this.orderItems.reduce((total, item) => total + item.price * item.quantity, 0);
     },
   },
   methods: {
@@ -98,7 +112,6 @@ export default {
     },
     handleOrderSubmission(orderDetails) {
       console.log('Order details submitted:', orderDetails);
-      // Здесь вы можете отправить данные заказа на сервер или обработать их другим способом
       this.closeOrderPopup();
     },
   },

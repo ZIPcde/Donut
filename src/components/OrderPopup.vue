@@ -98,24 +98,25 @@ export default {
       this.isPickup = false;
     },
     async submitOrder() {
-      const orderDetails = {
-        customer_name: this.name,
-        customer_phone: this.phone,
-        delivery_required: this.isPickup ? 0 : 1,
-        delivery_address: !this.isPickup ? this.deliveryAddress : null,
-        items: this.items, // Передаем реальные данные по заказу
-        total_amount: this.totalAmount, // Передаем реальную итоговую сумму
-        pickup_time: this.isPickup ? this.visitTime : null,
-        table_number: null,
-      };
+  const orderDetails = {
+    customer_name: this.name,
+    customer_phone: this.phone,
+    delivery_required: this.isPickup ? 0 : 1,
+    delivery_address: !this.isPickup ? this.deliveryAddress : null,
+    items: JSON.stringify(this.items), // Преобразуем items в JSON-строку
+    total_amount: this.totalAmount,
+    pickup_time: this.isPickup ? this.visitTime : null,
+    table_number: null,
+  };
 
-      try {
-        const response = await axios.post('/api/orders', { orderDetails });
-        console.log('Order submitted successfully:', response.data);
-        this.closePopup();
-      } catch (error) {
-        console.error('Failed to submit order:', error);
-      }
+  try {
+    // Отправляем `orderDetails` напрямую, без лишней оболочки
+    const response = await axios.post('/api/orders', orderDetails);
+    console.log('Order submitted successfully:', response.data);
+    this.closePopup();
+  } catch (error) {
+    console.error('Failed to submit order:', error);
+  }
     },
   },
 };

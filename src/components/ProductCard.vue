@@ -1,7 +1,6 @@
-<!-- ProductCard.vue -->
 <template>
   <div class="product-card">
-    <img :src="product.imagePath" :alt="product.name" class="product-image" />
+    <img :src="imageURL" :alt="product.name" class="product-image" />
     <div class="product-info">
       <h3>{{ product.name }}</h3>
       <p>{{ product.description }}</p>
@@ -35,6 +34,8 @@
 </template>
 
 <script>
+import config from '../config.js';
+
 export default {
   name: 'ProductCard',
   props: {
@@ -46,6 +47,11 @@ export default {
       showDetails: false,
       localQuantity: this.quantity,
     };
+  },
+  computed: {
+    imageURL() {
+      return `${config.imageBaseURL}/${this.product.imagePath}`;
+    },
   },
   methods: {
     toggleDetails() {
@@ -76,6 +82,7 @@ export default {
   },
 };
 </script>
+
 
   
   <style scoped>

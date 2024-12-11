@@ -49,7 +49,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import products from '@/assets/data/products.js';
+import products from '@/assets/data/products.mjs';
 import OrderSummary from '@/components/OrderSummary.vue';
 import ProductCard from '@/components/ProductCard.vue';
 import OrderPopup from '@/components/OrderPopup.vue';

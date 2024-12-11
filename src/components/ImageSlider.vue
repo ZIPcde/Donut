@@ -5,7 +5,7 @@
       <img
         v-for="(product, index) in visibleSlides"
         :key="index"
-        :src="product.imagePath"
+        :src="getImageURL(product.imagePath)"
         :alt="product.name"
         :class="[
           'slider_item',
@@ -29,7 +29,8 @@
 </template>
 
 <script>
-import products from '../assets/data/products.js';
+import products from '../assets/data/products.mjs';
+import config from '../config.js';
 
 export default {
   name: 'ImageSlider',
@@ -77,6 +78,9 @@ export default {
     },
   },
   methods: {
+    getImageURL(imagePath) {
+      return `${config.imageBaseURL}/${imagePath}`;
+    },
     nextSlide() {
       this.currentIndex = (this.currentIndex + 1) % this.sliderImages.length;
     },
@@ -107,6 +111,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .slider_container {

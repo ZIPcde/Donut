@@ -9,7 +9,7 @@ let products = []; // Пустой массив для хранения данн
 const fetchProducts = async () => {
   try {
     // const response = await axios.get('http://localhost:3000/products');
-    const response = await axios.get(`${config.baseURL}/api/products`);
+    const response = await axios.get('/api/products');
     products = response.data.map(product => ({
       ...product,
     }));
